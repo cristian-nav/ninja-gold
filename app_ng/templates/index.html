@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+    <label for="yourGold">Your Gold!</label>
+    <input type="text" id="yourGold" name="yourGold" value="{{ request.session.gold }}">
+
+    <div class="container">
+        <form class="box" action="/process_money" method="POST">
+        {% csrf_token %}
+        <h2>Farm</h2>
+        <p>(earns 10-20 golds)</p>
+        <input type="hidden" value="farm" name="ihidden">
+        <button type="submit">Find Gold!</button>
+        </form>
+
+        <form class="box" action="/process_money" method="POST">
+        {% csrf_token %}
+        <h2>Cave</h2>
+        <p>(earns 5-10 golds)</p>
+        <input type="hidden" value="cave" name="ihidden">
+        <button type="submit">Find Gold!</button>
+        </form>
+
+        <form class="box" action="/process_money" method="POST">
+        {% csrf_token %}
+        <h2>House</h2>
+        <p>(earns 2-5 golds)</p>
+        <input type="hidden" value="house" name="ihidden">
+        <button type="submit">Find Gold!</button>
+        </form>
+
+        <form class="box" action="/process_money" method="POST">
+        {% csrf_token %}
+        <h2>Casino</h2>
+        <p>(earns/takes 0-50 golds)</p>
+        <input type="hidden" value="casino" name="ihidden">
+        <button type="submit">Find Gold!</button>
+        </form>
+    </div>
+        <label for="activities">Activities:</label>
+        <br>
+        <ul>
+        {% for i in request.session.activities %}
+            {% if i|length > 51 %}
+                <li class="li red"> {{ i }}</li>
+            {% else %}
+                <li class="li green"> {{ i }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+</body>
+</html>
